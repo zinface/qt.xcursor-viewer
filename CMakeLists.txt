@@ -23,3 +23,29 @@ target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Gui Qt5::Widgets)
 install(TARGETS ${PROJECT_NAME}
         RUNTIME DESTINATION bin
 )
+
+include(cmake/SparkDesktopMacros.cmake)
+# 内容默认应用名称: Name= 应与项目名称相同
+spark_desktop_macros(
+    # 应用名称: Name=
+    "XCursor Viewer"
+    # 应用名称: Name[zh_CN]=
+    "XCursor 光标文件查看器"
+    # 应用说明: Comment=
+    "XCursor Viewer"
+    # 应用类型: Type=
+    "Application"
+    # 执行程序: Exec=
+    "xcursor-viewer %f"
+    # 图标路径: Icon=
+    "x"
+    # 应用分类: Category=
+    "Utility"
+)
+install(FILES ${SPARK_DESKTOP_FILE}
+    DESTINATION /usr/share/applications
+)
+
+# 注释行(使用方式)
+find_package(SparkDebPackage PATHS ${CMAKE_SOURCE_DIR})
+add_package_descript(cmake/spark-deb-package.descript)

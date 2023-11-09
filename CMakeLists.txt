@@ -30,7 +30,7 @@ spark_desktop_macros(
     # 应用名称: Name=
     "XCursor Viewer"
     # 应用名称: Name[zh_CN]=
-    "XCursor 光标文件查看器"
+    "XCursor Viewer(光标文件查看器)"
     # 应用说明: Comment=
     "XCursor Viewer"
     # 应用类型: Type=

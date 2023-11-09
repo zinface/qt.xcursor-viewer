@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(xcursor-viewer LANGUAGES CXX VERSION 1.1)
+project(xcursor-viewer LANGUAGES CXX VERSION 1.1.1)
 
 # Enable C++14
 set(CXX_STANDARD_REQUIRED ON)

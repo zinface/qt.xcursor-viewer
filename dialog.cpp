@@ -49,6 +49,17 @@ Dialog::Dialog(const QString& path, QWidget *parent)
     if (!path.isEmpty()) {
         openFolderPath(path);
     }
+
+    previewCursorTime.setInterval(100);
+    connect(&previewCursorTime, &QTimer::timeout, this, [this](){
+        if (previewIndex < previewCursor.length()) {
+            QImage img = previewCursor[previewIndex];
+            ui->preview->setPixmap(QPixmap::fromImage(img));
+            previewIndex++;
+        } else {
+            previewIndex = 0;
+        }
+    });
 }
 
 Dialog::~Dialog()
@@ -259,6 +270,10 @@ void Dialog::openFolderPath(QString path)
 
 void Dialog::showCursor(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
+    previewCursorTime.stop();
+    previewCursor.clear();
+    previewIndex = 0;
+
     if (!current) {
         ui->teCursorInfo->clear();
         return;
@@ -306,11 +321,14 @@ void Dialog::showCursor(QTreeWidgetItem *current, QTreeWidgetItem *previous)
                 QByteArray imgBa;
                 QBuffer buffer(&imgBa);
                 cursor.image.save(&buffer, "PNG");
+                previewCursor.append(cursor.image.copy());
 
                 imgBa = imgBa.toBase64();
 
                 currentCursorFile.cachedCursors += "<img src=\"data:image/png;base64, " + QSL(imgBa) + "\"/>";
             }
+
+//            previewCursor = cursorList;
             currentCursorFile.cachedCursors += "</p>";
         }
 
@@ -326,6 +344,7 @@ void Dialog::showCursor(QTreeWidgetItem *current, QTreeWidgetItem *previous)
         }
     }
 
+    previewCursorTime.start();
     ui->teCursorInfo->setHtml(currentCursorFile.cachedCursors);
 }
 

@@ -24,6 +24,7 @@
 #include <QList>
 #include <QMultiMap>
 #include <QString>
+#include <QTimer>
 #include <QTreeWidgetItem>
 
 namespace Ui { class Dialog; }
@@ -57,6 +58,10 @@ public:
     void openFolder();
     void openFolderPath(QString path);
     void showCursor(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+
+    QList<QImage> previewCursor;
+    QTimer previewCursorTime;
+    int previewIndex;
 
 private slots:
     void on_pbExport_clicked();

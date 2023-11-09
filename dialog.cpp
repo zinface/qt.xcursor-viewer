@@ -28,6 +28,7 @@
 #include <QFileInfo>
 #include <QShortcut>
 #include <QMessageBox>
+#include <QCursor>
 
 #define QS(str) QStringLiteral(str)
 #define QSU(str) QString::fromUtf8(str)
@@ -55,6 +56,7 @@ Dialog::Dialog(const QString& path, QWidget *parent)
         if (previewIndex < previewCursor.length()) {
             QImage img = previewCursor[previewIndex];
             ui->preview->setPixmap(QPixmap::fromImage(img));
+            setCursor(QCursor(QPixmap::fromImage(img), 0, 0));
             previewIndex++;
         } else {
             previewIndex = 0;
@@ -321,14 +323,11 @@ void Dialog::showCursor(QTreeWidgetItem *current, QTreeWidgetItem *previous)
                 QByteArray imgBa;
                 QBuffer buffer(&imgBa);
                 cursor.image.save(&buffer, "PNG");
-                previewCursor.append(cursor.image.copy());
 
                 imgBa = imgBa.toBase64();
 
                 currentCursorFile.cachedCursors += "<img src=\"data:image/png;base64, " + QSL(imgBa) + "\"/>";
             }
-
-//            previewCursor = cursorList;
             currentCursorFile.cachedCursors += "</p>";
         }
 
@@ -342,6 +341,14 @@ void Dialog::showCursor(QTreeWidgetItem *current, QTreeWidgetItem *previous)
                 cursorFile.cachedCursors = currentCursorFile.cachedCursors;
             }
         }
+    }
+
+    for (const QString key: currentCursorFile.cursorMap.keys()) {
+        QList<Cursor> cursorList = currentCursorFile.cursorMap.values(key);
+        for (const Cursor &cursor: cursorList) {
+            previewCursor.prepend(cursor.image.copy());
+        }
+        if (cursorList.length() > 0) break;
     }
 
     previewCursorTime.start();

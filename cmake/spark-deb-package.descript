@@ -22,7 +22,7 @@ Type: deb
 # 软件包名称(自动, 使用 PROJECT_NAME 变量值)
 Package: xcursor-viewer
 # 软件包版本(自动, 使用 PROJECT_VERSION 变量值)
-Version: 1.0
+Version: auto
 # 日历化尾部版本
 CalVer: false
 # 软件包架构(自动)
@@ -34,7 +34,7 @@ Priority: optional
 # 软件包依赖
 Depends: 
 # 软件包维护者(组织或个人)
-Maintainer: Individual developer <packages@email.com>
+Maintainer: zinface <zinface@163.com>
 # 软件包主页
 Homepage: https://www.gitlink.org.cn/zinface/xcursor-viewer
 # 软件包建议
@@ -43,5 +43,5 @@ Recommends:
 Conflicts: 
 # 软件包描述信息
 Descrition: XCursor Viewer
- XCursor Viewer
+ XCursor Viewer(光标查看器)
 
